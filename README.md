@@ -1,3 +1,5 @@
+This is the beginning of the Shearly Next.js mono-repo.  Many changes to come...
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
