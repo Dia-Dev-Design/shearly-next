@@ -4,7 +4,7 @@ import styles from "./page.module.css";
 export default function Home() {
   return (
     <main className={styles.main}>
-      <div className={styles.description}>
+      {/* <div className={styles.description}>
         <p>
           Get started by editing&nbsp;
           <code className={styles.code}>app/page.tsx</code>
@@ -89,6 +89,31 @@ export default function Home() {
             Instantly deploy your Next.js site to a shareable URL with Vercel.
           </p>
         </a>
+      </div> */}
+
+      <div>
+        <div className={styles.description}>
+          <h1 className={styles.center}>Welcome to Shearly</h1>
+        </div>
+
+        <div className={styles.grid}>
+          <a>
+            <h2> Provider</h2>
+            <p>
+              <button className={styles.button} role="button">Login</button>
+              <button className={styles.button} role="button">Signup</button>
+            </p> 
+          </a>
+
+          <a>
+            <h2>Customer</h2>
+            <p>
+              <button className={styles.button} role="button">Login</button>
+              <button className={styles.button} role="button">Signup</button> 
+            </p>
+          </a>
+        </div>
+        
       </div>
     </main>
   );
