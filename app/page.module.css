@@ -105,6 +105,58 @@
   transform: translateZ(0);
 }
 
+.logo {
+  position: relative;
+}
+
+/* New Styles */
+.page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.header {
+  display: flex;
+  justify-content: left;
+  margin: 0;
+  padding-top: 15px;
+  padding-left: 30px;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 10px;
+}
+
+.loginGrid {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 10px;
+}
+
+.infoCard {
+  align-items: center;
+  padding: 1rem 1.2rem;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+}
+
+.infoCard h2 {
+  align-items: center;
+  font-weight: 600;
+  margin-bottom: 0.7rem;
+}
+
+.infoCard p {
+  display: flex;
+  flex-direction: row;
+  padding: 10px;
+}
+
 /* button styles */
 .button {
   all: unset;
@@ -174,9 +226,6 @@
 }
 /* end */
 
-.logo {
-  position: relative;
-}
 /* Enable hover only on non-touch devices */
 @media (hover: hover) and (pointer: fine) {
   .card:hover {
