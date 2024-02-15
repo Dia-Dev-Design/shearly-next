@@ -1,6 +1,6 @@
 import Image from "next/image";
 import styles from "./page.module.css";
-import Link from 'next/link';
+// import Link from 'next/link';
 
 export default function Home() {
   return (
@@ -108,21 +108,23 @@ export default function Home() {
             <h2> Provider</h2>
             <p>
               <button className={styles.button} role="button">Login</button>
-              {/* <button className={styles.button} role="button">Signup</button> */}
             </p>
             <p>
-              First time you can sign in <Link href="#"> Here </Link>
-            </p> 
+              {/* First time you can sign in <Link href="#"> Here </Link>
+              <span>First time you can</span> */}
+              <button className={styles.button} role="button">Signup</button>
+            </p>
           </a>
 
           <a className={styles.infoCard}>
             <h2>Customer</h2>
             <p>
               <button className={styles.button} role="button">Login</button>
-              {/* <button className={styles.button} role="button">Signup</button>  */}
             </p>
             <p>
-              First time you can sign in <Link href="#"> Here </Link>
+              {/* First time you can sign in <Link href="#"> Here </Link>
+              <span>First time you can</span> */}
+              <button className={styles.button} role="button">Signup</button>
             </p> 
           </a>
         </div>

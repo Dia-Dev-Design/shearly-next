@@ -141,8 +141,10 @@
 .infoCard {
   align-items: center;
   padding: 1rem 1.2rem;
-  border-left: 1px solid black;
-  border-right: 1px solid black;
+  border-radius: 30px;
+  background: white;
+  /* border-left: 1px solid black;
+  border-right: 1px solid black; */
 }
 
 .infoCard h2 {
