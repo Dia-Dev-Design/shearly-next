@@ -1,8 +1,9 @@
+// 'use client'
 import type { Metadata } from "next";
-import StyledComponentsRegistry from './lib/registry'
-import GlobalStyles from "./styles/GlobalStyles";
-import { ThemeProvider } from 'styled-components';
-import theme from './styles/theme';
+// import StyledComponentsRegistry from './lib/registry'
+// import GlobalStyles from "./styles/GlobalStyles";
+// import { ThemeProvider } from 'styled-components';
+// import theme from './styles/theme';
 import { Inter } from "next/font/google";
 import "./globals.css";
 
@@ -21,12 +22,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <StyledComponentsRegistry>
-          <GlobalStyles />
-          <ThemeProvider theme={theme}>
+        {/* <StyledComponentsRegistry> */}
+          {/* <GlobalStyles /> */}
+          {/* <ThemeProvider theme={theme}> */}
             {children}
-          </ThemeProvider>
-        </StyledComponentsRegistry>
+          {/* </ThemeProvider> */}
+        {/* </StyledComponentsRegistry> */}
       </body>
     </html>
   );
