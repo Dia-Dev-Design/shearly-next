@@ -58,23 +58,23 @@ export default function Provider() {
         <h1>Sign Up as Provider</h1>
 
         <form method="POST" action="#mongooseEmail" onSubmit={submitForm} className={styles.form}>
-          <div className={styles.div}>
-            <label>Name</label>
-            <input type="text" name="name" onChange={handleInput} value={signup.name} />
+          <div className={styles.field}>
+            <label>Name:</label>
+            <input type="text" name="name" onChange={handleInput} value={signup.name} placeholder="..." />
           </div>
 
-          <div className={styles.div}>
-            <label>Email</label>
-            <input type="text" name="email" onChange={handleInput} value={signup.email} />
+          <div className={styles.field}>
+            <label>Email:</label>
+            <input type="text" name="email" onChange={handleInput} value={signup.email} placeholder="..." />
           </div>
 
-          <div className={styles.div}>
-            <label>Phone</label>
-            <PhoneInput country={'us'} value={signup.phone} onChange={phone => this.setState({ phone })} /> 
+          <div className={styles.field}>
+            <label>Phone:</label>
+            <PhoneInput country={'us'} value={signup.phone} onChange={phone => this.setSignup({ phone })} placeholder="..." /> 
           </div> 
 
-          <div className={styles.div}>
-            <label>Password</label>
+          <div className={styles.field}>
+            <label>Password:</label>
             <input 
                 type="password" 
                 name="password" 
@@ -82,12 +82,13 @@ export default function Provider() {
                 value={signup.password} 
                 pattern="[a-z]{0,9}" //add if possible or wanted {#@$!}
                 title="Password should be digits (0 to 9) or alphabets (a to z)."
+                placeholder="..."
             />
           </div>
 
-          <div className={styles.div}>
-            <label>Re-Enter Password</label>
-            <input type="password" name="re-enter-password" onChange={handleInput} value={signup.password}/>
+          <div className={styles.field}>
+            <label>Re-Enter Passwor:d</label>
+            <input type="password" name="re-enter-password" onChange={handleInput} value={signup.password} placeholder="..." />
           </div>
 
           <button type="submit">Sign Up</button>

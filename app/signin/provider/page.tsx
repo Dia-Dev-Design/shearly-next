@@ -59,14 +59,14 @@ export default function Provider() {
             <h1>Signed In</h1>
         :
         <form method="GET" action="#mongooseEmail" onSubmit={submitForm} className={styles.form}>
-          <div className={styles.div}>
-            <label>Email</label>
-            <input type="text" name="email" onChange={handleInput} value={login.email} />
+          <div className={styles.field}>
+            <label>Email:</label>
+            <input type="text" name="email" onChange={handleInput} value={login.email} placeholder="..." />
           </div>
 
-          <div className={styles.div}>
-            <label>Password</label>
-            <input type="password" name="password" onChange={handleInput} value={login.password}></input>
+          <div className={styles.field}>
+            <label>Password:</label>
+            <input type="password" name="password" onChange={handleInput} value={login.password} placeholder="..." />
           </div>
 
           <button type="submit">Sign In</button>
