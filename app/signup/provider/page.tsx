@@ -87,7 +87,7 @@ export default function Provider() {
           </div>
 
           <div className={styles.field}>
-            <label>Re-Enter Passwor:d</label>
+            <label>Re-Enter Password:</label>
             <input type="password" name="re-enter-password" onChange={handleInput} value={signup.password} placeholder="..." />
           </div>
 
