@@ -9,6 +9,7 @@ export default function Provider() {
         name: "",
         email: "",
         phone: "",
+        address: "",
         password: ""
   });
 
@@ -47,6 +48,7 @@ export default function Provider() {
         name: "",
         email: "",
         phone: "",
+        address: "",
         password: ""
       })
     })
@@ -70,8 +72,13 @@ export default function Provider() {
 
           <div className={styles.field}>
             <label>Phone:</label>
-            <PhoneInput country={'us'} value={signup.phone} onChange={phone => this.setSignup({ phone })} placeholder="..." /> 
-          </div> 
+            <PhoneInput country={'us'}  onChange={handleInput} value={signup.phone} placeholder="..." /> 
+          </div>
+
+          <div className={styles.field}>
+            <label>Address:</label>
+            <input type="text" name="address" onChange={handleInput} value={signup.address} placeholder="..." />
+          </div>
 
           <div className={styles.field}>
             <label>Password:</label>
