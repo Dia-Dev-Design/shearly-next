@@ -20,6 +20,7 @@ export default function Customer() {
             <div className={styles.dot}></div>
             <span>Provider</span>
           </label>
+          
           <label htmlFor={styles.option2} className={`${styles.option} ${styles.option2}`}>
             <input type="radio" name="select" id={styles.option2} checked={radio} onChange={() => handleInput(true)} />
             <div className={styles.dot}></div>

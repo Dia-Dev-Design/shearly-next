@@ -1,7 +1,4 @@
 .main {
-    /* display: flex;
-    justify-content: center;
-    align-items: center; */
     margin-top: 15px;
     min-height: 100vh;
 }
@@ -56,10 +53,6 @@
 }
 
 .body {
-    /* display: grid;
-    height: 100%;
-    place-items: center;
-    font-family: 'Lato', sans-serif; */
     display: flex;
     justify-content: center;
     align-items: center;
