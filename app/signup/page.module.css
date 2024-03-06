@@ -1,7 +1,8 @@
 .main {
-    display: flex;
+    /* display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: center; */
+    margin-top: 15px;
     min-height: 100vh;
 }
 
@@ -55,9 +56,15 @@
 }
 
 .body {
-    display: grid;
+    /* display: grid;
     height: 100%;
     place-items: center;
+    font-family: 'Lato', sans-serif; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
     font-family: 'Lato', sans-serif;
 }
 
@@ -115,6 +122,11 @@
   
 }
 
+.wrapper .option input[type="radio"]:checked + .dot::before {
+    opacity: 1;
+    transform: scale(1);
+}
+
 #option1:checked:checked ~ .option1,
 #option2:checked:checked ~ .option2{
     border-color: #0069d9;
@@ -126,11 +138,11 @@
     background: #fff;
 }
 
-#option1:checked:checked ~ .option1 .dot::before,  
+/* #option1:checked:checked ~ .option1 .dot::before,  
 #option2:checked:checked ~ .option2 .dot::before{
     opacity: 1;
     transform: scale(1);
-}
+} */
   
 .wrapper .option span{
     font-size: 20px;

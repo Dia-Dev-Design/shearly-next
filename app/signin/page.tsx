@@ -13,44 +13,28 @@ export default function Customer() {
 
   return (
     <main className={styles.main}>
-      <div className={styles.body}> {!radio ?
-        <div>
-            <div className={styles.wrapper}>
-                <input type="radio" name="select" id={styles.option1} checked={!radio} onChange={() => handleInput(false)}/>
-                <input type="radio" name="select" id={styles.option2} checked={radio} onChange={() => handleInput(true)}/>
-                <label htmlFor="option1" className={`${styles.option} ${styles.option1}`}>
-                    <div className={styles.dot}></div>
-                    <span>Provider</span>
-                </label>
-                <label htmlFor="option2" className={`${styles.option} ${styles.option2}`}>
-                    <div className={styles.dot}></div>
-                    <span>Customer</span>
-                </label>
-            </div>
-
-            <div>
-                <ProviderForm />
-            </div>
+      <div className={styles.body}>
+        <div className={styles.wrapper}>
+          <label htmlFor={styles.option1} className={`${styles.option} ${styles.option1}`}>
+            <input type="radio" name="select" id={styles.option1} checked={!radio} onChange={() => handleInput(false)} />
+            <div className={styles.dot}></div>
+            <span>Provider</span>
+          </label>
+          <label htmlFor={styles.option2} className={`${styles.option} ${styles.option2}`}>
+            <input type="radio" name="select" id={styles.option2} checked={radio} onChange={() => handleInput(true)} />
+            <div className={styles.dot}></div>
+            <span>Customer</span>
+          </label>
         </div>
-        :
-        <div>
-            <div className={styles.wrapper}>
-                <input type="radio" name="select" id={styles.option1} checked={!radio} onChange={() => handleInput(false)}/>
-                <input type="radio" name="select" id={styles.option2} checked={radio} onChange={() => handleInput(true)}/>
-                <label htmlFor="option1" className={`${styles.option} ${styles.option1}`}>
-                    <div className={styles.dot}></div>
-                    <span>Provider</span>
-                </label>
-                <label htmlFor="option2" className={`${styles.option} ${styles.option2}`}>
-                    <div className={styles.dot}></div>
-                    <span>Customer</span>
-                </label>
-            </div>
 
-            <div>
-                <ClientForm />
-            </div>
-        </div>
+        {!radio ?
+          <div>
+            <ProviderForm />
+          </div>
+          :
+          <div>
+            <ClientForm />
+          </div>
         }
       </div>
     </main>
