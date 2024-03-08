@@ -1,21 +1,10 @@
-'use client'
+"use client";
 import Image from "next/image";
 import styles from "./page.module.css";
-import axios from "axios";
 
 export default function Home() {
-  const callApi = async () => {
-    try {
-      const response = await axios.get("http://localhost:3000/api/stylist/find/65d12cc17cd85f01c5f80175")
-      console.log(response, typeof response);
-    } catch (error) {
-      console.log("error");
-    }
-  }
-  
   return (
     <main className={styles.main}>
-      <button type="button" onClick={callApi}>Press Me</button>
       <div className={styles.description}>
         <p>
           Get started by editing&nbsp;
