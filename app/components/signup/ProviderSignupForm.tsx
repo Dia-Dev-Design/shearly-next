@@ -1,5 +1,5 @@
 "use client";
-import styles from "../page.module.css";
+import styles from "./styles.module.css";
 import React, { useState } from "react";
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
@@ -13,7 +13,7 @@ export default function ProviderSignupForm() {
         password: ""
   });
 
-  const handleInput = (e) => {
+  const handleInput = (e : any) => {
     const fieldName = e.target.name;
     const fieldValue = e.target.value;
 
@@ -23,7 +23,7 @@ export default function ProviderSignupForm() {
     }));
   }
 
-  const submitForm = (e) => {
+  const submitForm = (e : any) => {
     // We don't want the page to refresh
     e.preventDefault()
 
@@ -72,7 +72,7 @@ export default function ProviderSignupForm() {
 
           <div className={styles.field}>
             <label>Phone:</label>
-            <PhoneInput country={'us'}  onChange={handleInput} value={signup.phone} placeholder="..." /> 
+            <PhoneInput country={'us'} value={signup.phone} onChange={phone => setSignup(prevState => ({ ...prevState,phone}))} placeholder="..." /> 
           </div>
 
           <div className={styles.field}>

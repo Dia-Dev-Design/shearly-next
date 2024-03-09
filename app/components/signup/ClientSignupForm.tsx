@@ -1,5 +1,5 @@
 "use client";
-import styles from "../page.module.css";
+import styles from "./styles.module.css";
 import React, { useState } from "react";
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
@@ -12,7 +12,7 @@ export default function ClientSignupFormr() {
         password: ""
   });
 
-  const handleInput = (e) => {
+  const handleInput = (e : any) => {
     const fieldName = e.target.name;
     const fieldValue = e.target.value;
 
@@ -22,7 +22,7 @@ export default function ClientSignupFormr() {
     }));
   }
 
-  const submitForm = (e) => {
+  const submitForm = (e : any) => {
     // We don't want the page to refresh
     e.preventDefault()
 
@@ -55,7 +55,7 @@ export default function ClientSignupFormr() {
   return (
     <main className={styles.main}>
       <div>
-        <h1>Sign Up as Customer</h1>
+        <h1>Sign Up as Client</h1>
         
         <form method="POST" action="#mongooseEmail" onSubmit={submitForm} className={styles.form}>
           <div className={styles.field}>
@@ -70,7 +70,7 @@ export default function ClientSignupFormr() {
 
           <div className={styles.field}>
             <label>Phone:</label>
-            <PhoneInput country={'us'} value={signup.phone} onChange={phone => this.setSignup({ phone })} placeholder="..." /> 
+            <PhoneInput country={'us'} value={signup.phone} onChange={phone => setSignup(prevState => ({ ...prevState,phone}))} placeholder="..." /> 
           </div> 
 
           <div className={styles.field}>
