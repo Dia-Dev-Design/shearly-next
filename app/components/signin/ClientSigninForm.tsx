@@ -1,5 +1,5 @@
 "use client"
-import styles from "../page.module.css";
+import styles from "./styles.module.css";
 import React, { useState } from "react"
 
 export default function Customer() {
@@ -10,7 +10,7 @@ export default function Customer() {
 
   const [loginSuccess, setLoginSuccess] = useState(false)
 
-  const handleInput = (e) => {
+  const handleInput = (e : any) => {
     const fieldName = e.target.name;
     const fieldValue = e.target.value;
 
@@ -20,7 +20,7 @@ export default function Customer() {
     }));
   }
 
-  const submitForm = (e) => {
+  const submitForm = (e : any) => {
     // We don't want the page to refresh
     e.preventDefault()
 
@@ -53,7 +53,7 @@ export default function Customer() {
   return (
     <main className={styles.main}>
       <div>
-        <h1>Sign In as Customer</h1>
+        <h1>Sign In as Client</h1>
 
         {loginSuccess ?
             <h1>Signed In</h1>

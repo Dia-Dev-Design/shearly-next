@@ -1,13 +1,13 @@
 "use client"
 import styles from "./page.module.css";
 import React, { useState } from "react";
-import ClientForm from "./Components/ClientSignupForm";
-import ProviderForm from "./Components/ProviderSignupForm";
+import ClientForm from "../Components/signup/ClientSignupForm";
+import ProviderForm from "../Components/signup/ProviderSignupForm";
 
 export default function SignUp() {
   const [radio, setRadio] = useState(false);
 
-  const handleInput = (value) => {
+  const handleInput = (value : boolean) => {
     setRadio(value);
   }
 
@@ -16,15 +16,15 @@ export default function SignUp() {
       <div className={styles.body}>
         <div className={styles.wrapper}>
           <label htmlFor={styles.option1} className={`${styles.option} ${styles.option1}`}>
-            <input type="radio" name="select" id={styles.option1} checked={!radio} onChange={() => handleInput(false)} />
+            <input type="radio" name="selectProvider" id={styles.option1} checked={!radio} onChange={() => handleInput(false)} />
             <div className={styles.dot}></div>
             <span>Provider</span>
           </label>
 
           <label htmlFor={styles.option2} className={`${styles.option} ${styles.option2}`}>
-            <input type="radio" name="select" id={styles.option2} checked={radio} onChange={() => handleInput(true)} />
+            <input type="radio" name="selectClient" id={styles.option2} checked={radio} onChange={() => handleInput(true)} />
             <div className={styles.dot}></div>
-            <span>Customer</span>
+            <span>Client</span>
           </label>
         </div>
 
