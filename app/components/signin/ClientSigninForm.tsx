@@ -2,7 +2,7 @@
 import styles from "./styles.module.css";
 import React, { useState } from "react"
 
-export default function Customer() {
+export default function ClientSigninForm() {
   const [login, setLogin] = useState({
         email: "",
         password: ""
