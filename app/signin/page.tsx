@@ -2,7 +2,7 @@
 import styles from "./page.module.css";
 import React, { useState } from "react";
 import ClientForm from "../components/signin/ClientSigninForm";
-import ProviderForm from "../Components/signin/ProviderSinginForm"
+import ProviderForm from "../components/signin/ProviderSinginForm"
 
 export default function Customer() {
   const [radio, setRadio] = useState(false);
