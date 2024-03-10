@@ -21,19 +21,19 @@ export default function ProviderSignupForm() {
       ...prevState,
       [fieldName]: fieldValue
     }));
-  }
+  };
 
   const submitForm = (e : any) => {
     // We don't want the page to refresh
-    e.preventDefault()
+    e.preventDefault();
 
     const formURL = e.target.action
-    const data = new FormData()
+    const data = new FormData();
 
     // Turn our formData state into data we can use with a form submission
     Object.entries(signup).forEach(([key, value]) => {
       data.append(key, value);
-    })
+    });
 
     // POST the data to the URL of the form
     fetch(formURL, {
@@ -52,7 +52,7 @@ export default function ProviderSignupForm() {
         password: ""
       })
     })
-  }
+  };
 
   return (
     <main className={styles.main}>
