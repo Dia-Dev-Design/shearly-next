@@ -9,8 +9,11 @@ export default function ClientSignupForm() {
         name: "",
         email: "",
         phone: "",
-        password: ""
+        password: "",
+        reEnterPassword: ""
   });
+
+  const [equalPassword, setEqualPassword] = useState(true);
 
   const handleInput = (e : any) => {
     const fieldName = e.target.name;
@@ -20,11 +23,20 @@ export default function ClientSignupForm() {
       ...prevState,
       [fieldName]: fieldValue
     }));
+
+    if (fieldName === "password" || fieldName === "reEnterPassword") {
+      setEqualPassword(true);
+    }
   };
 
   const submitForm = (e : any) => {
     // We don't want the page to refresh
     e.preventDefault();
+
+    if (signup.password !== signup.reEnterPassword) {
+      setEqualPassword(false);
+      return;
+    }
 
     const formURL = e.target.action;
     const data = new FormData();
@@ -47,7 +59,8 @@ export default function ClientSignupForm() {
         name: "",
         email: "",
         phone: "",
-        password: ""
+        password: "",
+        reEnterPassword: ""
       })
     })
   };
@@ -76,19 +89,27 @@ export default function ClientSignupForm() {
           <div className={styles.field}>
             <label>Password:</label>
             <input 
-                type="password" 
-                name="password" 
-                onChange={handleInput} 
-                value={signup.password} 
-                pattern="[a-z]{0,9}" //add if possible or wanted {#@$!}
-                title="Password should be digits (0 to 9) or alphabets (a to z)."
-                placeholder="..."
+              type="password" 
+              name="password" 
+              onChange={handleInput} 
+              value={signup.password} 
+              pattern="[a-z]{0,9}" //add if possible or wanted {#@$!}
+              title="Password should be digits (0 to 9) or alphabets (a to z)."
+              placeholder="..."
             />
           </div>
 
           <div className={styles.field}>
             <label>Re-Enter Password:</label>
-            <input type="password" name="re-enter-password" onChange={handleInput} value={signup.password} placeholder="..." />
+            <input 
+              type="password" 
+              name="re-enter-password" 
+              onChange={handleInput} 
+              value={signup.reEnterPassword}
+              pattern="[a-z]{0,9}" //add if possible or wanted {#@$!}
+              title="Password should be digits (0 to 9) or alphabets (a to z)."
+              placeholder="..." 
+            />
           </div>
 
           <button type="submit">Sign Up</button>
