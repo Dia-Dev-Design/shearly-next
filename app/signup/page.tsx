@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import styles from "./page.module.css";
 import React, { useState } from "react";
 import ClientForm from "../components/signup/ClientSignupForm";
@@ -7,9 +7,9 @@ import ProviderForm from "../components/signup/ProviderSignupForm";
 export default function SignUp() {
   const [radio, setRadio] = useState(false);
 
-  const handleInput = (value : boolean) => {
-    setRadio(value);
-  }
+  const handleInput = (e : boolean) => {
+    setRadio(e);
+  };
 
   return (
     <main className={styles.main}>

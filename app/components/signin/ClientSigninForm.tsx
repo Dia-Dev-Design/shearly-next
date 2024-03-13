@@ -1,14 +1,14 @@
-"use client"
+"use client";
 import styles from "./styles.module.css";
-import React, { useState } from "react"
+import React, { useState } from "react";
 
-export default function Customer() {
+export default function ClientSigninForm() {
   const [login, setLogin] = useState({
         email: "",
         password: ""
   });
 
-  const [loginSuccess, setLoginSuccess] = useState(false)
+  const [loginSuccess, setLoginSuccess] = useState(false);
 
   const handleInput = (e : any) => {
     const fieldName = e.target.name;
@@ -18,14 +18,14 @@ export default function Customer() {
       ...prevState,
       [fieldName]: fieldValue
     }));
-  }
+  };
 
   const submitForm = (e : any) => {
     // We don't want the page to refresh
-    e.preventDefault()
+    e.preventDefault();
 
-    const formURL = e.target.action
-    const data = new FormData()
+    const formURL = e.target.action;
+    const data = new FormData();
 
     // Turn our formData state into data we can use with a form submission
     Object.entries(login).forEach(([key, value]) => {
@@ -46,9 +46,9 @@ export default function Customer() {
         password: ""
       })
 
-      setLoginSuccess(true)
+      setLoginSuccess(true);
     })
-  }
+  };
 
   return (
     <main className={styles.main}>
