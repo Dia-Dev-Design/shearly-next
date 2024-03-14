@@ -39,32 +39,33 @@ export default function ProviderSignupForm() {
       return;
     }
 
-    const formURL = e.target.action
-    const data = new FormData();
+    // Commented for future use
+    // const formURL = e.target.action
+    // const data = new FormData();
 
     // Turn our formData state into data we can use with a form submission
-    Object.entries(signup).forEach(([key, value]) => {
-      data.append(key, value);
-    });
+    // Object.entries(signup).forEach(([key, value]) => {
+    //   data.append(key, value);
+    // });
 
-    // POST the data to the URL of the form
-    fetch(formURL, {
-      method: "POST",
-      body: data,
-      headers: {
-        'accept': 'application/json',
-      },
-    }).then((response) => response.json())
-    .then((data) => {
-      setSignup({
-        name: "",
-        email: "",
-        phone: "",
-        address: "",
-        password: "",
-        reEnterPassword: ""
-      })
-    })
+    // // POST the data to the URL of the form
+    // fetch(formURL, {
+    //   method: "POST",
+    //   body: data,
+    //   headers: {
+    //     'accept': 'application/json',
+    //   },
+    // }).then((response) => response.json())
+    // .then((data) => {
+    //   setSignup({
+    //     name: "",
+    //     email: "",
+    //     phone: "",
+    //     address: "",
+    //     password: "",
+    //     reEnterPassword: ""
+    //   })
+    // })
   };
 
   return (
