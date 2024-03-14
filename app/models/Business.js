@@ -9,17 +9,15 @@ const businessSchema = new Schema(
         name: { type: String, required: true, trim: true },
         phone: { type: String, default: '', trim: true },
         address: { type: Object },
-        owner: [
-            { type: Schema.Types.ObjectId, ref: 'Provider' }
-        ],
+        owner: { type: Schema.Types.ObjectId, ref: 'Provider' },
         employees: [
             { type: Schema.Types.ObjectId, ref: 'Provider' }
         ],
         appointments: [
-            { type: Schema.Types.ObjectId, ref: 'Appointment' }
+            { type: Schema.Types.ObjectId, ref: 'Appointments' }
         ],
         transactions: [
-            { type: Schema.Types.ObjectId, ref: 'Transaction' }
+            { type: Schema.Types.ObjectId, ref: 'Transactions' }
         ]
     },
     {

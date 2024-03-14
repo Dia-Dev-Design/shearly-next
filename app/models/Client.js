@@ -10,10 +10,10 @@ const clientSchema = new Schema(
         address: { type: Object },
         specialCare: { type: Object },
         appointment: [
-            { type: Schema.Types.ObjectId, ref: 'Appointment' }
+            { type: Schema.Types.ObjectId, ref: 'Appointments' }
         ],
         transaction: [
-            { type: Schema.Types.ObjectId, ref: 'Transaction' }
+            { type: Schema.Types.ObjectId, ref: 'Transactions' }
         ]
     },
     {
