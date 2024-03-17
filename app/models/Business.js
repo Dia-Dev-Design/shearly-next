@@ -14,10 +14,10 @@ const businessSchema = new Schema(
             { type: Schema.Types.ObjectId, ref: 'Provider' }
         ],
         appointments: [
-            { type: Schema.Types.ObjectId, ref: 'Appointments' }
+            { type: Schema.Types.ObjectId, ref: 'Appointment' }
         ],
         transactions: [
-            { type: Schema.Types.ObjectId, ref: 'Transactions' }
+            { type: Schema.Types.ObjectId, ref: 'Transaction' }
         ]
     },
     {

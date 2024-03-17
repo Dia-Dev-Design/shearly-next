@@ -9,11 +9,11 @@ const clientSchema = new Schema(
         phone: { type: String, default: '' },
         address: { type: Object },
         specialCare: { type: Object },
-        appointment: [
-            { type: Schema.Types.ObjectId, ref: 'Appointments' }
+        appointments: [
+            { type: Schema.Types.ObjectId, ref: 'Appointment' }
         ],
-        transaction: [
-            { type: Schema.Types.ObjectId, ref: 'Transactions' }
+        transactions: [
+            { type: Schema.Types.ObjectId, ref: 'Transaction' }
         ]
     },
     {
