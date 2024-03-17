@@ -20,6 +20,7 @@
   },
   "devDependencies": {
     "@swc/plugin-styled-components": "^1.5.115",
+    "@types/bcrypt": "^5.0.2",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

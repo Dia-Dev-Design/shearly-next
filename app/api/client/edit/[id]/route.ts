@@ -1,20 +1,22 @@
 import { NextRequest } from "next/server";
 import dbConnect from "../../../../lib/dbConnect";
 import Client from "../../../../models/Client";
-
-const bcrypt = require("bcrypt");
+import bcrypt from "bcrypt";
 
 export async function PUT( req: NextRequest, {params}: any){
     const { id }: { id: String } = params;
 
     try {
-        const request = await req.json();
+        const body = await req.json();
+        console.log(body);
 
         await dbConnect();
 
         // Check if having to add the check if email is changed it must not exist in the database and password must be encrypted
 
-        const findClientEmail = await Client.findOne(request.email);
+        // Add a new step in which it before checking if the user changed the email based on their id
+
+        const findClientEmail = await Client.findOne({email: body.email});
 
         if(findClientEmail){
             console.error("\nError: Client email already exist!");
@@ -24,10 +26,10 @@ export async function PUT( req: NextRequest, {params}: any){
 
         const saltRounds = 10;
         const salt = bcrypt.genSaltSync(saltRounds);
-        const hashedPassword = bcrypt.hashSync(request.password, salt);
-        request.password = hashedPassword;
+        const hashedPassword = bcrypt.hashSync(body.password, salt);
+        body.password = hashedPassword;
 
-        const UpdateClient = await Client.findByIdAndUpdate(id, request.body, { new: true });
+        const UpdateClient = await Client.findByIdAndUpdate(id, body, { new: true });
 
         if(!UpdateClient){
             console.error("\nError: Invalid Client Id!");
