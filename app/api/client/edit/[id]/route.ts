@@ -15,13 +15,14 @@ export async function PUT( req: NextRequest, {params}: any){
         // Check if having to add the check if email is changed it must not exist in the database and password must be encrypted
 
         // Add a new step in which it before checking if the user changed the email based on their id
+        if (body.email){
+            const findExistingClient = await Client.findOne({ email: body.email });
 
-        const findClientEmail = await Client.findOne({email: body.email});
+            if (findExistingClient && findExistingClient._id.toString() !== id) {
+                console.error("\nError: Client email already exists!");
 
-        if(findClientEmail){
-            console.error("\nError: Client email already exist!");
-            
-            return Response.json({message: "Client email already exist!"}, {status: 400});
+                return Response.json({ message: "Client email already exists!" }, { status: 400 });
+            }
         }
 
         const saltRounds = 10;
