@@ -11,5 +11,5 @@ const serviceSchema = new Schema({
 }
 );
 
-module.exports = models.Service || models.Service || model('Service', serviceSchema);
+module.exports = models.Service || model('Service', serviceSchema);
 
