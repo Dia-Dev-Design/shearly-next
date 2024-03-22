@@ -27,7 +27,9 @@ export async function POST(req: Request) {
         { status: 400 }
       );
     }
-    const findService: IService| null = await Service.findOne({ name: body.name });
+    const findService: IService | null = await Service.findOne({
+      name: body.name,
+    });
     if (findService) {
       console.error(`\nError: Service with name: ${body.name} already exists!`);
       return Response.json(
@@ -35,22 +37,21 @@ export async function POST(req: Request) {
         { status: 400 }
       );
     }
-    const createService = await Service.create({ ...body });
+    const createService: IService = await Service.create({ ...body });
     console.log("Success!");
     return Response.json(
       { message: "OK", service: createService },
       { status: 201 }
     );
   } catch (error: any) {
-    if(error.name === 'MongoNetworkError'){
-        console.error(`\nError: Database is offline!\n${error.message}`)
-        return Response.json({message: "Database is offline!"}, {status: 500})
-    }
-    if (error instanceof mongoose.Error.ValidationError) {
-      console.error(
-        "\nMongoose Schema Validation Error ==> ",
-        error.message
+    if (error.name === "MongoNetworkError") {
+      console.error(`\nError: Database is offline!\n${error.message}`);
+      return Response.json(
+        { message: "Database is offline!" },
+        { status: 500 }
       );
+    } else if (error instanceof mongoose.Error.ValidationError) {
+      console.error("\nMongoose Schema Validation Error ==> ", error.message);
       return Response.json(
         {
           message: "Name is required to create a Service!",

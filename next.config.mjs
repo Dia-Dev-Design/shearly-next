@@ -6,6 +6,8 @@ const nextConfig = {
   },
   experimental: {
     forceSwcTransforms: true,
-  },
+    esmExternals: "loose",
+    serverComponentsExternalPackages: ["mongoose"]
+  }
 };
 export default nextConfig;
