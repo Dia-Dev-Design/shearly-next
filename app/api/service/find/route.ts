@@ -1,17 +1,18 @@
 import dbConnect from "@/app/lib/dbConnect";
 import Service from "@/app/models/Service";
 
-interface IService {
+interface ServiceModelInterface {
+  _id: string;
   name: string;
   price?: number;
-  image?: string;
+  image?: string
   description?: string;
 }
 
-export async function GET(req: Request) {
+export async function GET() {
   try {
     await dbConnect();
-    const findAllServices: IService[] = await Service.find();
+    const findAllServices: ServiceModelInterface[] = await Service.find();
     if (!findAllServices.length) {
       console.log("No Service In Database!");
       return Response.json(
@@ -25,18 +26,26 @@ export async function GET(req: Request) {
     console.log("Success!");
     return Response.json(
       {
-        message: `${findAllServices.length} were found!`,
+        message: `${findAllServices.length} services were found!`,
         services: findAllServices,
       },
       { status: 200 }
     );
   } catch (error: any) {
-    console.error("\nInternal Server Error! Error:", error.message);
-    return Response.json(
-      {
-        message: "Internal Server Error!",
-      },
-      { status: 500 }
-    );
+    if (error.name === "MongoNetworkError") {
+      console.error(`\nError: Database is offline!\n${error.message}`);
+      return Response.json(
+        { message: "Database is offline!" },
+        { status: 500 }
+      );
+    } else {
+      console.error("\nInternal Server Error! Error:", error.message);
+      return Response.json(
+        {
+          message: "Internal Server Error!",
+        },
+        { status: 500 }
+      );
+    }
   }
 }

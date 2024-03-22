@@ -5,14 +5,15 @@ import Service from "@/app/models/Service";
 type PostBody = {
   name: string;
   price?: number;
-  image?: string;
+  image?: any;
   description?: string;
 };
 
-interface IService {
+interface ServiceModelInterface {
+  _id: string;
   name: string;
   price?: number;
-  image?: string;
+  image?: string
   description?: string;
 }
 
@@ -27,7 +28,7 @@ export async function POST(req: Request) {
         { status: 400 }
       );
     }
-    const findService: IService | null = await Service.findOne({
+    const findService: ServiceModelInterface | null = await Service.findOne({
       name: body.name,
     });
     if (findService) {
@@ -37,7 +38,7 @@ export async function POST(req: Request) {
         { status: 400 }
       );
     }
-    const createService: IService = await Service.create({ ...body });
+    const createService: ServiceModelInterface = await Service.create({ ...body });
     console.log("Success!");
     return Response.json(
       { message: "OK", service: createService },
