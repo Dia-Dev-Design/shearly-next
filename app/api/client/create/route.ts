@@ -38,9 +38,9 @@ export async function POST(req: Request) {
     const salt = bcrypt.genSaltSync(saltRounds);
     const hashedPassword = bcrypt.hashSync(body.password, salt);
     if (findClient) {
-      console.error(`\nError: Service with name: ${body.name} already exists!`);
+      console.error(`\nError: Client with email: ${body.email} already exists!`);
       return Response.json(
-        { message: `Service with name: ${body.name} already exists!` },
+        { message: `Client with email: ${body.email} already exists!` },
         { status: 400 }
       );
     }
