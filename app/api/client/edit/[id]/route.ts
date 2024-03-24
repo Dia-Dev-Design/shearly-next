@@ -1,47 +1,86 @@
-import { NextRequest } from "next/server";
-import dbConnect from "../../../../lib/dbConnect";
-import Client from "../../../../models/Client";
+import dbConnect from "@/app/lib/dbConnect";
+import Client from "@/app/models/Client";
+import { ObjectId } from "mongoose";
 import bcrypt from "bcrypt";
 
-export async function PUT( req: NextRequest, {params}: any){
-    const { id }: { id: String } = params;
-
-    try {
-        const body = await req.json();
-        console.log(body);
-
-        await dbConnect();
-
-        // Check if having to add the check if email is changed it must not exist in the database and password must be encrypted
-
-        // Add a new step in which it before checking if the user changed the email based on their id
-        if (body.email){
-            const findExistingClient = await Client.findOne({ email: body.email });
-
-            if (findExistingClient && findExistingClient._id.toString() !== id) {
-                console.error("\nError: Client email already exists!");
-
-                return Response.json({ message: "Client email already exists!" }, { status: 400 });
-            }
-        }
-
-        const saltRounds = 10;
-        const salt = bcrypt.genSaltSync(saltRounds);
-        const hashedPassword = bcrypt.hashSync(body.password, salt);
-        body.password = hashedPassword;
-
-        const UpdateClient = await Client.findByIdAndUpdate(id, body, { new: true });
-
-        if(!UpdateClient){
-            console.error("\nError: Invalid Client Id!");
-
-            return Response.json({message: "Invalid Client Id!"}, {status: 400});
-        }
-
-        console.log("Client Updated!");
-        return Response.json({message: "Client Updated!", client: UpdateClient}, {status:200});
-    } catch ( error: any ) {
-        console.error("Internal Server Error: ", error.message);
-        return Response.json({message: "Internal Server Error!", error});
-    }
+interface ClientModelInterface {
+  _id: string;
+  image: string;
+  name: string;
+  email: string;
+  password: string;
+  phone: string;
+  address: object;
+  specialCare: object;
+  appointments: ObjectId;
+  transactions: ObjectId;
 };
+
+type PUTBody = {
+    image?: string;
+    name?: string;
+    email?: string;
+    password: string;
+    phone?: string;
+    address?: object;
+    specialCare?: object;
+};
+
+export async function PUT(req: Request, { params }: { params: { id: string } }) {
+  const { id }: { id: string } = params;
+  try {
+    const body: PUTBody = await req.json();
+    await dbConnect();
+
+    if (body.email){
+        const findClient: ClientModelInterface | null = await Client.findOne({
+            email: body.email,
+        });
+
+        if (findClient && findClient._id.toString() !== id) {
+            console.error("\nError: Client email already exists!");
+
+            return Response.json({ message: "Client email already exists!" }, { status: 400 });
+        }
+    }
+    const saltRounds = 10;
+    const salt = bcrypt.genSaltSync(saltRounds);
+    const hashedPassword = bcrypt.hashSync(body.password, salt);
+    body.password = hashedPassword;
+
+    const editedClient: ClientModelInterface | null = await Client.findByIdAndUpdate(id, { ...body }, {new:true});
+    if (!editedClient) {
+      console.error(`\nError: No client found with id: ${id}`);
+      return Response.json({ message: "Client not found!" }, { status: 404 });
+    }
+    console.log("Success!");
+    return Response.json(
+      { message: "OK", service: editedClient },
+      { status: 400 }
+    );
+  } catch (error: any) {
+    if (error.name === "MongoNetworkError") {
+      console.error(`\nError: Database is offline!\n${error.message}`);
+      return Response.json(
+        { message: "Database is offline!" },
+        { status: 500 }
+      );
+    } else if (error instanceof mongoose.Error.ValidationError) {
+      console.error(`\nMongoose Schema Validation Error ==> ${error.message}`);
+      return Response.json(
+        {
+          message: "A unique email is required to have on each client!",
+        },
+        { status: 400 }
+      );
+    } else {
+      console.error("\nInternal Server Error! Error:\n", error.message);
+      return Response.json(
+        {
+          message: "Internal Server Error!",
+        },
+        { status: 500 }
+      );
+    }
+  }
+}

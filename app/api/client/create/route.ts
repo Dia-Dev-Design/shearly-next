@@ -1,35 +1,78 @@
-import { NextRequest } from "next/server";
-import dbConnect from "../../../lib/dbConnect";
-import Client from "../../../models/Client";
+import dbConnect from "@/app/lib/dbConnect";
+import mongoose from "mongoose";
+import Client from "@/app/models/Client";
+import { ObjectId } from "mongoose";
 import bcrypt from "bcrypt";
 
-export async function POST( req: NextRequest ) {
-    try {
-      const body = await req.json();
-      console.log(body);
-
-      await dbConnect();
-
-      // Check if both work in having to add the verify that a Client with said email doesn't exist.
-      // Also encrypt the password using bcrypt.
-
-      const findClientEmail = await Client.findOne({ email: body.email });
-
-      if(findClientEmail){
-        console.error("\nError: Client email already exist!");
-        
-        return Response.json({message: "Client email already exist!"}, {status: 400});
-      }
-
-      const saltRounds = 10;
-      const salt = bcrypt.genSaltSync(saltRounds);
-      const hashedPassword = bcrypt.hashSync(body.password, salt);
-
-      const response = await Client.create({...body, password: hashedPassword});
-
-      return Response.json({message: "Client Created!", client: response}, {status: 200});
-    } catch ( error: any ) {
-      console.error("Internal Server Error: ", error.message);
-      return Response.json({message: "Internal Server Error!", error});
-    }
+interface ClientModelInterface {
+  _id: string;
+  image: string;
+  name: string;
+  email: string;
+  password: string;
+  phone: string;
+  address: object;
+  specialCare: object;
+  appointments: ObjectId;
+  transactions: ObjectId;
 };
+
+type PostBody = {
+  image?: string;
+  name?: string;
+  email?: string;
+  password: string;
+  phone?: string;
+  address?: object;
+  specialCare?: object;
+};
+
+export async function POST(req: Request) {
+  try {
+    const body: PostBody = await req.json();
+    await dbConnect();
+    const findClient: ClientModelInterface | null = await Client.findOne({
+      email: body.email,
+    });
+    const saltRounds = 10;
+    const salt = bcrypt.genSaltSync(saltRounds);
+    const hashedPassword = bcrypt.hashSync(body.password, salt);
+    if (findClient) {
+      console.error(`\nError: Service with name: ${body.name} already exists!`);
+      return Response.json(
+        { message: `Service with name: ${body.name} already exists!` },
+        { status: 400 }
+      );
+    }
+    const createClient: ClientModelInterface = await Client.create({...body, password: hashedPassword});
+    console.log("Success!");
+    return Response.json(
+      { message: "OK", client: createClient },
+      { status: 201 }
+    );
+  } catch (error: any) {
+    if (error.name === "MongoNetworkError") {
+      console.error(`\nError: Database is offline!\n${error.message}`);
+      return Response.json(
+        { message: "Database is offline!" },
+        { status: 500 }
+      );
+    } else if (error instanceof mongoose.Error.ValidationError) {
+      console.error("\nMongoose Schema Validation Error ==> ", error.message);
+      return Response.json(
+        {
+          message: "Name is required to create a Service!",
+        },
+        { status: 400 }
+      );
+    } else {
+      console.error("\nInternal Server Error! Error:", error.message);
+      return Response.json(
+        {
+          message: "Internal Server Error!",
+        },
+        { status: 500 }
+      );
+    }
+  }
+}

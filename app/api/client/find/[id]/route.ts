@@ -1,25 +1,50 @@
-import { NextRequest } from "next/server";
-import dbConnect from "../../../../lib/dbConnect";
-import Client from "../../../../models/Client";
+import dbConnect from "@/app/lib/dbConnect";
+import Client from "@/app/models/Client";
+import { ObjectId } from "mongoose";
 
-export async function GET( req: NextRequest, {params}: any){
-    const { id }: { id: String } = params;
-
-    try {
-        await dbConnect();
-
-        const findClient = await Client.findById(id);
-
-        if(!findClient){
-            console.error("\nError: Invalid Client Id!");
-
-            return Response.json({message: "Invalid Client Id!"}, {status: 400});
-        }
-
-        console.log("Client Found!");
-        return Response.json({message: "Client Found!", client: findClient}, {status:200});
-    } catch ( error: any ) {
-        console.error("Internal Server Error: ", error.message);
-        return Response.json({message: "Internal Server Error!", error});
-    }
+interface ClientModelInterface {
+    _id: string;
+    image: string;
+    name: string;
+    email: string;
+    password: string;
+    phone: string;
+    address: object;
+    specialCare: object;
+    appointments: ObjectId;
+    transactions: ObjectId;
 };
+
+export async function GET(_:any, { params }: { params: { id: string } }) {
+  const { id } = params;
+  try {
+    await dbConnect();
+    const findClient: ClientModelInterface | null = await Client.findById(id);
+    if (!findClient) {
+      console.error(`\nError: No Client found with id: ${id}`);
+      return Response.json({ message: "Client not found!" }, { status: 404 });
+    }
+
+    console.log("Success!");
+    return Response.json(
+      { message: "OK", service: findClient },
+      { status: 200 }
+    );
+  } catch (error: any) {
+    if (error.name === "MongoNetworkError") {
+      console.error(`\nError: Database is offline!\n${error.message}`);
+      return Response.json(
+        { message: "Database is offline!" },
+        { status: 500 }
+      );
+    } else {
+      console.error("\nInternal Server Error! Error:", error.message);
+      return Response.json(
+        {
+          message: "Internal Server Error!",
+        },
+        { status: 500 }
+      );
+    }
+  }
+}
