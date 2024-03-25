@@ -1,5 +1,6 @@
 import dbConnect from "@/app/lib/dbConnect";
 import Service from "@/app/models/Service";
+import mongoose from "mongoose";
 interface ServiceModelInterface {
   _id: string;
   name: string;
