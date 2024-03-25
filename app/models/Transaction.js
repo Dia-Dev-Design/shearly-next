@@ -12,9 +12,9 @@ const transactionSchema = new Schema(
     total: Number,
     client: { type: Schema.Types.ObjectId, ref: "Client" },
     appointment: { type: Schema.Types.ObjectId, ref: "Appointment" },
-    business: { type: Schema.Types.ObjectId, ref: "Business" },
+    business: { type: Schema.Types.ObjectId, ref: "Business" }
   },
   { timestamps: true }
 );
 
-module.exports = models.Transaction || model("Transaction", transactionSchema);
+export default models.Transaction || model("Transaction", transactionSchema);
