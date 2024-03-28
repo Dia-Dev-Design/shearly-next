@@ -1,8 +1,8 @@
 import dbConnect from "@/app/lib/dbConnect";
 import Client from "@/app/models/Client";
-import { ObjectId } from "mongoose";
+import { Document, Types } from "mongoose";
 
-interface ClientModelInterface {
+interface ClientModelInterface extends Document {
     _id: string;
     image: string;
     name: string;
@@ -11,8 +11,8 @@ interface ClientModelInterface {
     phone: string;
     address: object;
     specialCare: object;
-    appointments: ObjectId;
-    transactions: ObjectId;
+    appointments: Types.ObjectId[];
+    transactions: Types.ObjectId[];
 };
 
 export async function GET(_:any, { params }: { params: { id: string } }) {

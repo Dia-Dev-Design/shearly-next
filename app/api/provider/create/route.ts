@@ -1,50 +1,51 @@
 import dbConnect from "@/app/lib/dbConnect";
 import mongoose from "mongoose";
-import Client from "@/app/models/Client";
-import { Document, Types } from "mongoose";
+import Provider from "@/app/models/Provider";
+import { ObjectId } from "mongoose";
 import bcrypt from "bcrypt";
 
-interface ClientModelInterface extends Document {
-  _id: Types.ObjectId;
-  image: string;
+interface ProviderModelInterface {
+  _id: string;
   name: string;
   email: string;
   password: string;
   phone: string;
-  address?: object;
-  specialCare?: object;
-  appointments: Types.ObjectId[];
-  transactions: Types.ObjectId[];
+  address: object;
+  employment: string;
+  profileImage: string;
+  images: [ string ];
+  business: ObjectId;
 };
 
 type PostBody = {
-  image?: string;
   name?: string;
   email?: string;
   password: string;
   phone?: string;
   address?: object;
-  specialCare?: object;
+  employment?: string;
+  profileImage?: string;
+  images?: [ string ];
 };
 
 export async function POST(req: Request) {
   try {
     const body: PostBody = await req.json();
     await dbConnect();
-    const findClient: ClientModelInterface | null = await Client.findOne({
+    const findProvider: ProviderModelInterface | null = await Provider.findOne({
       email: body.email,
     });
     const saltRounds = 10;
     const salt = bcrypt.genSaltSync(saltRounds);
     const hashedPassword = bcrypt.hashSync(body.password, salt);
-    if (findClient) {
-      console.error(`\nError: Client with email: ${body.email} already exists!`);
-      return Response.json(
-        { message: `Client with email: ${body.email} already exists!` },
-        { status: 400 }
-      );
-    }
-    const createClient: ClientModelInterface = await Client.create({...body, password: hashedPassword});
+    if (findProvider) {
+        console.error(`\nError: Provider with email: ${body.email} already exists!`);
+        return Response.json(
+          { message: `Provider with email: ${body.email} already exists!` },
+          { status: 400 }
+        );
+      }
+    const createClient: ProviderModelInterface = await Provider.create({...body, password: hashedPassword});
     console.log("Success!");
     return Response.json(
       { message: "OK", client: createClient },
