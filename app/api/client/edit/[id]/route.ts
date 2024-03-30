@@ -1,4 +1,5 @@
 import dbConnect from "@/app/lib/dbConnect";
+import mongoose from "mongoose";
 import Client from "@/app/models/Client";
 import { Document, Types } from "mongoose";
 import bcrypt from "bcrypt";
