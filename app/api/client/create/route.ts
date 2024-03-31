@@ -34,9 +34,11 @@ export async function POST(req: Request) {
     const findClient: ClientModelInterface | null = await Client.findOne({
       email: body.email,
     });
+    
     const saltRounds = 10;
     const salt = bcrypt.genSaltSync(saltRounds);
     const hashedPassword = bcrypt.hashSync(body.password, salt);
+
     if(body.name === "" || body.email === "" || body.password === ""){
       console.error(`\nError: Client name, email and password must not be empty!`);
       return Response.json(
@@ -69,7 +71,7 @@ export async function POST(req: Request) {
       console.error("\nMongoose Schema Validation Error ==> ", error.message);
       return Response.json(
         {
-          message: "Name is required to create a Service!",
+          message: "Name is required to create a Client!",
         },
         { status: 500 }
       );

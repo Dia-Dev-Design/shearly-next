@@ -17,7 +17,7 @@ interface ClientModelInterface extends Document {
   transactions: Types.ObjectId[];
 };
 
-type PUTBody = {
+type PutBody = {
     image?: string;
     name?: string;
     email?: string;
@@ -30,7 +30,7 @@ type PUTBody = {
 export async function PUT(req: Request, { params }: { params: { id: string } }) {
   const { id }: { id: string } = params;
   try {
-    const body: PUTBody = await req.json();
+    const body: PutBody = await req.json();
     await dbConnect();
 
     if (body.email){
@@ -47,10 +47,21 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
             );
         }
     }
-    const saltRounds = 10;
-    const salt = bcrypt.genSaltSync(saltRounds);
-    const hashedPassword = bcrypt.hashSync(body.password, salt);
-    body.password = hashedPassword;
+
+    if(body.name === "" || body.email === "" || body.password === ""){
+      console.error(`\nError: Client name, email and password must not be empty!`);
+      return Response.json(
+        { message: ` Client name, email and password must not be empty!` },
+        { status: 400 }
+      );
+    }
+    
+    if("password" in body){
+      const saltRounds = 10;
+      const salt = bcrypt.genSaltSync(saltRounds);
+      const hashedPassword = bcrypt.hashSync(body.password, salt);
+      body.password = hashedPassword;
+    }
 
     const editedClient: ClientModelInterface | null = await Client.findByIdAndUpdate(id, { ...body }, {new:true});
     if (!editedClient) {
@@ -62,7 +73,7 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
     }
     console.log("Success!");
     return Response.json(
-      { message: "OK", service: editedClient },
+      { message: "OK", client: editedClient },
       { status: 200 }
     );
   } catch (error: any) {
