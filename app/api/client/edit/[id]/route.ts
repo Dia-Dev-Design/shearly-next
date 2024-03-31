@@ -41,7 +41,10 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
         if (findClient && findClient._id.toString() !== id) {
             console.error("\nError: Client email already exists!");
 
-            return Response.json({ message: "Client email already exists!" }, { status: 400 });
+            return Response.json(
+              { message: "Client email already exists!" },
+              { status: 400 }
+            );
         }
     }
     const saltRounds = 10;
@@ -52,12 +55,15 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
     const editedClient: ClientModelInterface | null = await Client.findByIdAndUpdate(id, { ...body }, {new:true});
     if (!editedClient) {
       console.error(`\nError: No client found with id: ${id}`);
-      return Response.json({ message: "Client not found!" }, { status: 404 });
+      return Response.json(
+        { message: "Client not found!" }, 
+        { status: 400 }
+      );
     }
     console.log("Success!");
     return Response.json(
       { message: "OK", service: editedClient },
-      { status: 400 }
+      { status: 200 }
     );
   } catch (error: any) {
     if (error.name === "MongoNetworkError") {
