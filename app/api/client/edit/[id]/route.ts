@@ -72,7 +72,7 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
         {
           message: "A unique email is required to have on each client!",
         },
-        { status: 400 }
+        { status: 500 }
       );
     } else {
       console.error("\nInternal Server Error! Error:\n", error.message);
