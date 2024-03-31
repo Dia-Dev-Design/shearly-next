@@ -37,6 +37,14 @@ export async function POST(req: Request) {
     const saltRounds = 10;
     const salt = bcrypt.genSaltSync(saltRounds);
     const hashedPassword = bcrypt.hashSync(body.password, salt);
+    if(body.name === null || body.email === null || body.password === null){
+      console.error(`\nError: Client name, email and password must not be empty!`);
+      return Response.json(
+        { message: ` Client name, email and password must not be empty!` },
+        { status: 400 }
+      );
+    }
+    
     if (findClient) {
       console.error(`\nError: Client with email: ${body.email} already exists!`);
       return Response.json(
@@ -63,7 +71,7 @@ export async function POST(req: Request) {
         {
           message: "Name is required to create a Service!",
         },
-        { status: 400 }
+        { status: 500 }
       );
     } else {
       console.error("\nInternal Server Error! Error:", error.message);
