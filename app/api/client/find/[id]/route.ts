@@ -27,7 +27,7 @@ export async function GET(_:any, { params }: { params: { id: string } }) {
 
     console.log("Success!");
     return Response.json(
-      { message: "OK", service: findClient },
+      { message: "OK", client: findClient },
       { status: 200 }
     );
   } catch (error: any) {
