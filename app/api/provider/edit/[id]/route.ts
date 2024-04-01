@@ -17,7 +17,7 @@ interface ProviderModelInterface extends Document {
     business: Types.ObjectId[];
 };
 
-type PUTBody = {
+type PutBody = {
     name?: string;
     email?: string;
     password: string;
@@ -31,7 +31,7 @@ type PUTBody = {
 export async function PUT(req: Request, { params }: { params: { id: string } }) {
   const { id }: { id: string } = params;
   try {
-    const body: PUTBody = await req.json();
+    const body: PutBody = await req.json();
     await dbConnect();
 
     if (body.email){
@@ -45,10 +45,21 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
             return Response.json({ message: "Provider email already exists!" }, { status: 400 });
         }
     }
-    const saltRounds = 10;
-    const salt = bcrypt.genSaltSync(saltRounds);
-    const hashedPassword = bcrypt.hashSync(body.password, salt);
-    body.password = hashedPassword;
+
+    if(body.name === "" || body.email === "" || body.password === ""){
+      console.error(`\nError: Provider name, email and password must not be empty!`);
+      return Response.json(
+        { message: ` Provider name, email and password must not be empty!` },
+        { status: 400 }
+      );
+    }
+    
+    if("password" in body){
+      const saltRounds = 10;
+      const salt = bcrypt.genSaltSync(saltRounds);
+      const hashedPassword = bcrypt.hashSync(body.password, salt);
+      body.password = hashedPassword;
+    }
 
     const editedProvider: ProviderModelInterface | null = await Provider.findByIdAndUpdate(id, { ...body }, {new:true});
     if (!editedProvider) {
@@ -57,8 +68,8 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
     }
     console.log("Success!");
     return Response.json(
-      { message: "OK", service: editedProvider },
-      { status: 400 }
+      { message: "OK", provider: editedProvider },
+      { status: 200 }
     );
   } catch (error: any) {
     if (error.name === "MongoNetworkError") {
@@ -71,9 +82,9 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
       console.error(`\nMongoose Schema Validation Error ==> ${error.message}`);
       return Response.json(
         {
-          message: "A unique email is required to have on each client!",
+          message: "A unique email is required to have on each provider!",
         },
-        { status: 400 }
+        { status: 500 }
       );
     } else {
       console.error("\nInternal Server Error! Error:\n", error.message);

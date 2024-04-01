@@ -27,7 +27,7 @@ export async function GET(_:any, { params }: { params: { id: string } }) {
 
     console.log("Success!");
     return Response.json(
-      { message: "OK", service: findProvider },
+      { message: "OK", provider: findProvider },
       { status: 200 }
     );
   } catch (error: any) {

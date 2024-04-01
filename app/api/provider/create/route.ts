@@ -35,9 +35,19 @@ export async function POST(req: Request) {
     const findProvider: ProviderModelInterface | null = await Provider.findOne({
       email: body.email,
     });
+
     const saltRounds = 10;
     const salt = bcrypt.genSaltSync(saltRounds);
     const hashedPassword = bcrypt.hashSync(body.password, salt);
+
+    if(body.name === "" || body.email === "" || body.password === ""){
+      console.error(`\nError: Provider name, email and password must not be empty!`);
+      return Response.json(
+        { message: ` Provider name, email and password must not be empty!` },
+        { status: 400 }
+      );
+    }
+
     if (findProvider) {
       console.error(`\nError: Provider with email: ${body.email} already exists!`);
       return Response.json(
@@ -45,6 +55,7 @@ export async function POST(req: Request) {
         { status: 400 }
       );
     }
+    
     const createProvider: ProviderModelInterface = await Provider.create({...body, password: hashedPassword});
     console.log("Success!");
     return Response.json(
@@ -62,9 +73,9 @@ export async function POST(req: Request) {
       console.error("\nMongoose Schema Validation Error ==> ", error.message);
       return Response.json(
         {
-          message: "Name is required to create a Service!",
+          message: "Name is required to create a Provider!",
         },
-        { status: 400 }
+        { status: 500 }
       );
     } else {
       console.error("\nInternal Server Error! Error:", error.message);
