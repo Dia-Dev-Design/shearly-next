@@ -5,7 +5,7 @@ import { Document, Types } from "mongoose";
 import bcrypt from "bcrypt";
 
 interface ClientModelInterface extends Document {
-  _id: string;
+  _id: Types.ObjectId;
   image: string;
   name: string;
   email: string;

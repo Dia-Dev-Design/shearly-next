@@ -3,7 +3,7 @@ import Client from "@/app/models/Client";
 import { Document, Types } from "mongoose";
 
 interface ClientModelInterface extends Document {
-  _id: string;
+  _id: Types.ObjectId;
   image: string;
   name: string;
   email: string;
