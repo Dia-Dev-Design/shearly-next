@@ -10,8 +10,11 @@ export default function ProviderSignupForm() {
         email: "",
         phone: "",
         address: "",
-        password: ""
+        password: "",
+        reEnterPassword: ""
   });
+
+  const [equalPassword, setEqualPassword] = useState(true);
 
   const handleInput = (e : any) => {
     const fieldName = e.target.name;
@@ -21,38 +24,49 @@ export default function ProviderSignupForm() {
       ...prevState,
       [fieldName]: fieldValue
     }));
-  }
+
+    if (fieldName === "password" || fieldName === "reEnterPassword") {
+      setEqualPassword(true);
+    }
+  };
 
   const submitForm = (e : any) => {
     // We don't want the page to refresh
-    e.preventDefault()
+    e.preventDefault();
 
-    const formURL = e.target.action
-    const data = new FormData()
+    if (signup.password !== signup.reEnterPassword) {
+      setEqualPassword(false);
+      return;
+    }
+
+    // Commented for future use
+    // const formURL = e.target.action
+    // const data = new FormData();
 
     // Turn our formData state into data we can use with a form submission
-    Object.entries(signup).forEach(([key, value]) => {
-      data.append(key, value);
-    })
+    // Object.entries(signup).forEach(([key, value]) => {
+    //   data.append(key, value);
+    // });
 
-    // POST the data to the URL of the form
-    fetch(formURL, {
-      method: "POST",
-      body: data,
-      headers: {
-        'accept': 'application/json',
-      },
-    }).then((response) => response.json())
-    .then((data) => {
-      setSignup({
-        name: "",
-        email: "",
-        phone: "",
-        address: "",
-        password: ""
-      })
-    })
-  }
+    // // POST the data to the URL of the form
+    // fetch(formURL, {
+    //   method: "POST",
+    //   body: data,
+    //   headers: {
+    //     'accept': 'application/json',
+    //   },
+    // }).then((response) => response.json())
+    // .then((data) => {
+    //   setSignup({
+    //     name: "",
+    //     email: "",
+    //     phone: "",
+    //     address: "",
+    //     password: "",
+    //     reEnterPassword: ""
+    //   })
+    // })
+  };
 
   return (
     <main className={styles.main}>
@@ -83,19 +97,27 @@ export default function ProviderSignupForm() {
           <div className={styles.field}>
             <label>Password:</label>
             <input 
-                type="password" 
-                name="password" 
-                onChange={handleInput} 
-                value={signup.password} 
-                pattern="[a-z]{0,9}" //add if possible or wanted {#@$!}
-                title="Password should be digits (0 to 9) or alphabets (a to z)."
-                placeholder="..."
+              type="password" 
+              name="password" 
+              onChange={handleInput} 
+              value={signup.password} 
+              pattern="[a-z]{0,9}" //add if possible or wanted {#@$!}
+              title="Password should be digits (0 to 9) or alphabets (a to z)."
+              placeholder="..."
             />
           </div>
 
           <div className={styles.field}>
             <label>Re-Enter Password:</label>
-            <input type="password" name="re-enter-password" onChange={handleInput} value={signup.password} placeholder="..." />
+            <input 
+              type="password" 
+              name="re-enter-password" 
+              onChange={handleInput} 
+              value={signup.reEnterPassword}
+              pattern="[a-z]{0,9}" //add if possible or wanted {#@$!}
+              title="Password should be digits (0 to 9) or alphabets (a to z)."
+              placeholder="..." 
+            />
           </div>
 
           <button type="submit">Sign Up</button>
