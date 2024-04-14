@@ -24,7 +24,7 @@ export async function GET() {
       return Response.json(
         {
           message: "There are currently no provider saved!",
-          services: findAllProviders,
+          provider: findAllProviders,
         },
         { status: 200 }
       );
@@ -33,7 +33,7 @@ export async function GET() {
     return Response.json(
       {
         message: `${findAllProviders.length} Providers were found!`,
-        services: findAllProviders,
+        provider: findAllProviders,
       },
       { status: 200 }
     );
