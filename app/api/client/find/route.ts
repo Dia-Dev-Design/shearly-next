@@ -24,7 +24,7 @@ export async function GET() {
       return Response.json(
         {
           message: "There are currently no Client saved!",
-          services: findAllClients,
+          client: findAllClients,
         },
         { status: 200 }
       );
@@ -33,7 +33,7 @@ export async function GET() {
     return Response.json(
       {
         message: `${findAllClients.length} clients were found!`,
-        services: findAllClients,
+        client: findAllClients,
       },
       { status: 200 }
     );
