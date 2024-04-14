@@ -4,7 +4,7 @@ import Business from "@/app/models/Business";
 import { Document, Types } from "mongoose";
 
 interface BusinessModelInterface extends Document {
-  _id: string;
+  _id: Types.ObjectId;
   businessImage?: string;
   images?: [ string ];
   name: string;
