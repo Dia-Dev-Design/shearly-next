@@ -24,7 +24,7 @@ export async function GET() {
       return Response.json(
         {
           message: "There are currently no Business saved!",
-          services: findAllBusiness,
+          business: findAllBusiness,
         },
         { status: 200 }
       );
@@ -33,7 +33,7 @@ export async function GET() {
     return Response.json(
       {
         message: `${findAllBusiness.length} Business were found!`,
-        services: findAllBusiness,
+        business: findAllBusiness,
       },
       { status: 200 }
     );
