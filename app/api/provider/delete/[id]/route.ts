@@ -3,7 +3,7 @@ import Provider from "@/app/models/Provider";
 import { Document, Types } from "mongoose";
 
 interface ProviderModelInterface extends Document {
-    _id: string;
+    _id: Types.ObjectId;
     name: string;
     email: string;
     password: string;

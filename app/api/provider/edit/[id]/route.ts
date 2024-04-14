@@ -5,7 +5,7 @@ import { Document, Types } from "mongoose";
 import bcrypt from "bcrypt";
 
 interface ProviderModelInterface extends Document {
-    _id: string;
+    _id: Types.ObjectId;
     name: string;
     email: string;
     password: string;
