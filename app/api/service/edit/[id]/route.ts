@@ -28,7 +28,7 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
         const findService: ServiceModelInterface | null = await Service.findOne({
             name: body.name,
         });
-      if (findService?._id != id) {
+      if (findService && findService._id != id) {
         console.error("\nError: There exist a service with the same name!");
         return Response.json(
           { message: `A service with name: ${body.name} already exists!` },
@@ -44,7 +44,7 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
     console.log("Success!");
     return Response.json(
       { message: "OK", service: editedService },
-      { status: 400 }
+      { status: 200 }
     );
   } catch (error: any) {
     if (error.name === "MongoNetworkError") {

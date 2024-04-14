@@ -57,7 +57,7 @@ export async function POST(req: Request) {
         {
           message: "Name is required to create a Service!",
         },
-        { status: 400 }
+        { status: 500 }
       );
     } else {
       console.error("\nInternal Server Error! Error:", error.message);
