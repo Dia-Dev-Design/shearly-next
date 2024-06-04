@@ -26,6 +26,14 @@ export async function POST(req: Request) {
     const body: PostBody = await req.json();
     await dbConnect();
 
+    if(body.name === "" || body.name === null){
+      console.error(`\nError: Business name must not be empty!`);
+      return Response.json(
+        { message: ` Client Business must not be empty!` },
+        { status: 400 }
+      );
+    }
+
     const createBusiness: BusinessModelInterface = await Business.create({...body});
     console.log("Success!");
     return Response.json(
